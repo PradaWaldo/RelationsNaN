@@ -130,14 +130,41 @@ namespace RelationsNaN.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddPlatform(int? id, int idPlatform)
+        public async Task<IActionResult> AddPlatform(int? id, int platformId)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var plateform = await _context.Platform.FindAsync(id);
+            var plateform = await _context.Platform.FindAsync(platformId);
+            var game = await _context.Game.FindAsync(id);
+
+            try
+            {
+                plateform.Games = new List<Game>
+                {
+                    game
+                };
+
+                game.platforms = new List<Platform> 
+                { 
+                    plateform
+                };
+                
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!GameExists(game.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return View();
         }
