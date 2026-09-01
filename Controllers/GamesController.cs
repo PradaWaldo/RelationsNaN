@@ -82,7 +82,13 @@ namespace RelationsNaN.Controllers
             {
                 return NotFound();
             }
+            if (game.platforms == null)
+            {
+                game.platforms = new List<Platform>();
+            }
+
             ViewData["GenreId"] = new SelectList(_context.Genre, "Id", "Name", game.GenreId);
+            ViewData["platforms"] = new SelectList(_context.Platform, "Id", "Name");
             return View(game);
         }
 
@@ -119,8 +125,24 @@ namespace RelationsNaN.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["GenreId"] = new SelectList(_context.Genre, "Id", "Id", game.GenreId);
+            ViewData["platforms"] = new SelectList(_context.Platform, "Id", "Name");
             return View(game);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddPlatform(int? id, int idPlatform)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var plateform = await _context.Platform.FindAsync(id);
+
+            return View();
+        }
+
+
 
         // GET: Games/Delete/5
         public async Task<IActionResult> Delete(int? id)
