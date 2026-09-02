@@ -15,10 +15,10 @@
 
     <div class="col-md-4">
 
-                @foreach (var platform in Model.platforms)
+                @foreach (var platform in Model.Platforms)
 {
     <form asp-action="RemovePlatform" method="post">
-        <input type="hidden" name="id" value="@Model.Id"/>
+        <input type="hidden" name="gameId" value="@Model.Id"/>
         <input type="hidden" name="platformId" value="@platform.Id" />
         <button type="submit" class="btn btn-danger m-1">
             @platform.Name
@@ -30,11 +30,11 @@
 }
 
 <form asp-action="AddPlatform" method="post">
-    <input type="hidden" name="id" value="@Model.Id" />
+    <input type="hidden" name="GameId" value="@Model.Id" />
     <div class="form-group">
-        <label asp-for="platforms" class="control-label"></label>
+        <label asp-for="Platforms" class="control-label"></label>
         <select name="platformId" class="form-control" asp-items="ViewBag.Platforms">
-            <option value="">--- NONE ---</option>
+            <option value="">-- Choose a platform --</option>
         </select>
     </div>
     <div class="form-group m-2">

@@ -25,7 +25,7 @@
                 @Html.DisplayNameFor(model => model.Genre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.platforms)
+                @Html.DisplayNameFor(model => model.Platforms)
             </th>
             <th></th>
         </tr>
@@ -45,14 +45,14 @@
             <td>
                     @if(item.Genre != null)
                     {
-                        @Html.DisplayFor(modelItem => item.Genre.Id)
+                        @Html.DisplayFor(modelItem => item.Genre.Name)
                     }
                 
             </td>
             <td>
-                    @if (item.platforms != null)
+                    @if (item.Platforms.Count() > 0)
                     {
-                        @foreach (var platform in item.platforms)
+                        @foreach (var platform in item.Platforms)
                         {
 
                             <span class="badge bg-primary">@platform.Name</span>
